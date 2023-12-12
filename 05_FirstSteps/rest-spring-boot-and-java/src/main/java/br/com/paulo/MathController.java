@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.com.paulo.exceptions.UnsupportedMathOperationException;
+
 @RestController
 public class MathController {
 	private final AtomicLong counter = new AtomicLong();
@@ -19,15 +21,22 @@ public class MathController {
 			) throws Exception {
 		
 		if (!isNumeric(numberOne) || !isNumeric(numberTwo)) {
-			throw new Exception();
+			throw new UnsupportedMathOperationException("Please set a numeric value");
 		}
 		return convertToDouble(numberOne) + convertToDouble(numberTwo);
 	}
 	
 	private boolean isNumeric(String strNumber) {
-		return false;
+		if (strNumber == null) return false;
+		String number = strNumber.replaceAll(",", ".");
+		return number.matches("[-+]?[0-9]*\\.?[0-9]+");
 	}
 	private Double convertToDouble(String strNumber) {
-		return null;
+		if (strNumber == null) return 0D;
+		//BR 10,25 ; US 10.25
+		String number = strNumber.replaceAll(",", ".");
+		if (isNumeric(number)) return Double.parseDouble(number);
+			
+		return 0D;
 	}
 }

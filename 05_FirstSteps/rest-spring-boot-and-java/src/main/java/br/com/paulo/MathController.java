@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.paulo.exceptions.UnsupportedMathOperationException;
+import br.com.paulo.utils.*;
 
 @RestController
 public class MathController {
@@ -20,10 +21,10 @@ public class MathController {
 			@PathVariable(value = "numberTwo") String numberTwo
 			) throws Exception {
 		
-		if (!isNumeric(numberOne) || !isNumeric(numberTwo)) {
-			throw new UnsupportedMathOperationException("Please set a numeric value");
-		}
-		return convertToDouble(numberOne) + convertToDouble(numberTwo);
+		Utils.checkNumbers(numberOne, numberTwo);
+		Double n1 = Utils.convertToDouble(numberOne);
+		Double n2 = Utils.convertToDouble(numberTwo);
+		return n1 + n2;
 	}
 	
 	@RequestMapping(value = "/subtraction/{numberOne}/{numberTwo}",
@@ -33,12 +34,11 @@ public class MathController {
 			@PathVariable(value = "numberTwo") String numberTwo
 			) throws Exception {
 		
-		if (!isNumeric(numberOne) || !isNumeric(numberTwo)) {
-			throw new UnsupportedMathOperationException("Please set a numeric value");
-		}
-		return convertToDouble(numberOne) - convertToDouble(numberTwo);
+		Utils.checkNumbers(numberOne, numberTwo);
+		Double n1 = Utils.convertToDouble(numberOne);
+		Double n2 = Utils.convertToDouble(numberTwo);
+		return n1 - n2;	
 	}
-	
 	@RequestMapping(value = "/multiplication/{numberOne}/{numberTwo}",
 			method = RequestMethod.GET)
 	public Double multiplication (
@@ -46,10 +46,10 @@ public class MathController {
 			@PathVariable(value = "numberTwo") String numberTwo
 			) throws Exception {
 		
-		if (!isNumeric(numberOne) || !isNumeric(numberTwo)) {
-			throw new UnsupportedMathOperationException("Please set a numeric value");
-		}
-		return convertToDouble(numberOne) * convertToDouble(numberTwo);
+		Utils.checkNumbers(numberOne, numberTwo);
+		Double n1 = Utils.convertToDouble(numberOne);
+		Double n2 = Utils.convertToDouble(numberTwo);
+		return n1 * n2;
 	}
 	
 	@RequestMapping(value = "/division/{numberOne}/{numberTwo}",
@@ -59,10 +59,11 @@ public class MathController {
 			@PathVariable(value = "numberTwo") String numberTwo
 			) throws Exception {
 		
-		if (!isNumeric(numberOne) || !isNumeric(numberTwo)) {
-			throw new UnsupportedMathOperationException("Please set a numeric value");
-		}
-		return convertToDouble(numberOne) / convertToDouble(numberTwo);
+		Utils.checkNumbers(numberOne, numberTwo);
+		Double n1 = Utils.convertToDouble(numberOne);
+		Double n2 = Utils.convertToDouble(numberTwo);
+		return n1 / n2;
+		
 	}
 	
 	@RequestMapping(value = "/mean/{numberOne}/{numberTwo}",
@@ -72,10 +73,10 @@ public class MathController {
 			@PathVariable(value = "numberTwo") String numberTwo
 			) throws Exception {
 		
-		if (!isNumeric(numberOne) || !isNumeric(numberTwo)) {
-			throw new UnsupportedMathOperationException("Please set a numeric value");
-		}
-		return (convertToDouble(numberOne) + convertToDouble(numberTwo))/2;
+		Utils.checkNumbers(numberOne, numberTwo);
+		Double n1 = Utils.convertToDouble(numberOne);
+		Double n2 = Utils.convertToDouble(numberTwo);
+		return (n1 + n2)/2;
 	}
 	
 	@RequestMapping(value = "/squareRoot/{numberOne}",
@@ -84,23 +85,10 @@ public class MathController {
 			@PathVariable(value = "numberOne") String numberOne
 			) throws Exception {
 		
-		if (!isNumeric(numberOne)) {
-			throw new UnsupportedMathOperationException("Please set a numeric value");
-		}
-		return Math.sqrt(convertToDouble(numberOne));
+		Utils.checkNumbers(numberOne, "0");
+		Double n1 = Utils.convertToDouble(numberOne);
+		return Math.sqrt(n1);
 	}
 	
-	private boolean isNumeric(String strNumber) {
-		if (strNumber == null) return false;
-		String number = strNumber.replaceAll(",", ".");
-		return number.matches("[-+]?[0-9]*\\.?[0-9]+");
-	}
-	private Double convertToDouble(String strNumber) {
-		if (strNumber == null) return 0D;
-		//BR 10,25 ; US 10.25
-		String number = strNumber.replaceAll(",", ".");
-		if (isNumeric(number)) return Double.parseDouble(number);
-			
-		return 0D;
-	}
+	
 }

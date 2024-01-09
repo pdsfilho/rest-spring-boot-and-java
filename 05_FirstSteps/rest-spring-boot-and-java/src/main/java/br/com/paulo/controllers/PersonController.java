@@ -1,5 +1,6 @@
 package br.com.paulo.controllers;
 
+import java.util.List;
 import java.util.concurrent.atomic.AtomicLong;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +24,13 @@ public class PersonController {
 	
 	private final AtomicLong counter = new AtomicLong();
 	
+	
+	@RequestMapping(
+			method = RequestMethod.GET,
+			produces = MediaType.APPLICATION_JSON_VALUE)
+	public List<Person> findAll(){
+		return service.findAll();
+		}
 	
 	@RequestMapping(value = "/{id}",
 			method = RequestMethod.GET,

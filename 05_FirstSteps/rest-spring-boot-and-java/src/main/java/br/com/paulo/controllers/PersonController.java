@@ -25,30 +25,34 @@ public class PersonController {
 	@Autowired
 	private PersonServices service;
 	
+	//Find All
 	@GetMapping(produces = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML, MediaType.APPLICATION_YML})
 	public List<PersonVO> findAll() {
 		return service.findAll();
 	}
 	
+	//Find by ID
 	@GetMapping(value = "/{id}",
-			produces = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML, MediaType.APPLICATION_YML, MediaType.APPLICATION_YML })
+			produces = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML, MediaType.APPLICATION_YML })
 	public PersonVO findById(@PathVariable(value = "id") Long id) {
 		return service.findById(id);
 	}
 	
+	//Create
 	@PostMapping(consumes = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML, MediaType.APPLICATION_YML },
 			produces = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML, MediaType.APPLICATION_YML })
 	public PersonVO create(@RequestBody PersonVO person) {
 		return service.create(person);
 	}
 	
+	//Update
 	@PutMapping(consumes = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML, MediaType.APPLICATION_YML },
 			produces = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML, MediaType.APPLICATION_YML })
 	public PersonVO update(@RequestBody PersonVO person) {
 		return service.update(person);
 	}
 	
-	
+	//Delete
 	@DeleteMapping(value = "/{id}")
 	public ResponseEntity<?> delete(@PathVariable(value = "id") Long id) {
 		service.delete(id);

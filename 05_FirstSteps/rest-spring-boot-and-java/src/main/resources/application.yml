@@ -7,8 +7,12 @@ spring:
   jpa:
     open-in-view: false
     hibernate:
-      ddl-auto: none #Hibernate will only read instructions and not create structures. The Migration will do that.
+      ddl-auto: none #Hibernate will only read instructions won't create structures. The Migration will do that.
     # properties:
       # hibernate:
         # dialect: org.hibernate.dialect.MySQLDialect
     show-sql: false
+springdoc:
+  pathsToMatch: /api/**/v1/**
+  swagger-ui:
+    use-root-path: true

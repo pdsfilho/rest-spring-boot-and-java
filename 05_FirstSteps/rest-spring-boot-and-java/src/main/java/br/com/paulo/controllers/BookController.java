@@ -3,7 +3,7 @@ package br.com.paulo.controllers;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
+import br.com.paulo.util.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,28 +25,28 @@ public class BookController {
 	private BookServices service;
 	
 	//Find All
-	@GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+	@GetMapping(produces = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML, MediaType.APPLICATION_YML})
 	public List<BookVO> findAll() {
 		return service.findAll();
 	}
 	
 	//Find by ID
 	@GetMapping(value = "/{id}", 
-			produces = {MediaType.APPLICATION_JSON_VALUE})
+			produces = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML, MediaType.APPLICATION_YML})
 	public BookVO findById(@PathVariable(value = "id") Long id) {
 		return service.findbyId(id);
 	}
 	
 	//Create
-	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE,
-			produces = MediaType.APPLICATION_JSON_VALUE)
+	@PostMapping(consumes = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML, MediaType.APPLICATION_YML },
+			produces = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML, MediaType.APPLICATION_YML })
 	public BookVO create(@RequestBody BookVO book) {
 		return service.create(book);
 	}
 	
 	//Update
-	@PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE,
-			produces = MediaType.APPLICATION_JSON_VALUE)
+	@PutMapping(consumes = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML, MediaType.APPLICATION_YML },
+			produces = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML, MediaType.APPLICATION_YML })
 	public BookVO update(@RequestBody BookVO book) {
 		return service.update(book);
 	}

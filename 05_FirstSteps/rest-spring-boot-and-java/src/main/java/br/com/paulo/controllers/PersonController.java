@@ -25,7 +25,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 
 @RestController
 @RequestMapping("/api/person/v1")
-@Tag(name = "People", description = "Endpoints for Managing People")
+@Tag(name = "People", description = "Endpoints for People Management")
 public class PersonController {
 	
 	@Autowired
@@ -86,8 +86,8 @@ public class PersonController {
 			produces = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML, MediaType.APPLICATION_YML })
 	
 	@Operation(summary = "Create a Person", 
-	description = "Adds a person",
-	tags = {"Adds a new Person by passing in a JSON, XML OR YML representation of the person."},
+	description = "Adds a new Person by passing in a JSON, XML OR YML representation of the person.",
+	tags = {"People"},
 	responses = {
 			@ApiResponse(description = "Success", responseCode = "200",
 					content = {
@@ -133,7 +133,7 @@ public class PersonController {
 	//Delete
 	@DeleteMapping(value = "/{id}")
 	@Operation(summary = "Deletes a Person", 
-	description = "Deletes a Person by passing in a JSON, XML OR YML representation of the person.",
+	description = "Deletes a Person.",
 	tags = {"People"},
 	responses = {
 			

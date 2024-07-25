@@ -10,7 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.com.paulo.controllers.BookController;
-import br.com.paulo.controllers.PersonController;
+import br.com.paulo.controllers.BookController;
 import br.com.paulo.data.vo.v1.BookVO;
 import br.com.paulo.exceptions.RequiredObjectIsNullException;
 import br.com.paulo.exceptions.ResourceNotFoundException;
@@ -37,7 +37,7 @@ public class BookServices {
 		return books;
 	}
 	
-	public BookVO findbyId(Long id) {
+	public BookVO findById(Long id) {
 		logger.info("Finding one book!");
 		
 		var entity = repository.findById(id)
@@ -53,7 +53,7 @@ public class BookServices {
 		logger.info("Creating one book!");
 		var entity = DozerMapper.parseObject(book, Book.class);
 		var vo =  DozerMapper.parseObject(repository.save(entity), BookVO.class);
-		vo.add(linkTo(methodOn(PersonController.class).findById(vo.getKey())).withSelfRel());
+		vo.add(linkTo(methodOn(BookController.class).findById(vo.getKey())).withSelfRel());
 		return vo;
 	}
 	
@@ -71,7 +71,7 @@ if (book == null) throw new RequiredObjectIsNullException();
 		entity.setTitle(book.getTitle());
 		
 		var vo =  DozerMapper.parseObject(repository.save(entity), BookVO.class);
-		vo.add(linkTo(methodOn(PersonController.class).findById(vo.getKey())).withSelfRel());
+		vo.add(linkTo(methodOn(BookController.class).findById(vo.getKey())).withSelfRel());
 		return vo;
 	}
 	

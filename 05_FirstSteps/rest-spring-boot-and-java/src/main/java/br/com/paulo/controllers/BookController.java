@@ -81,7 +81,7 @@ public class BookController {
 		}
 	)
 	public BookVO findById(@PathVariable(value = "id") Long id) {
-		return service.findbyId(id);
+		return service.findById(id);
 	}
 	
 	//Create
